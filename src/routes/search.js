@@ -7,7 +7,7 @@ const Moovie = require('../models/moovie');
 router.post('/title', (req, res) => {
     Moovie.find({ "Title": { "$regex": req.body.value, "$options": "i" } })
         .then(results =>
-            res.status(201).json(results)
+            res.status(200).json(results)
         )
         .catch(err => res.status(500).json(err));
 });
@@ -22,7 +22,4 @@ router.post('/actor', (req, res) => {
         .catch(err => res.status(500).json(err));
 });
 
-function findByParameter(field12, value) {
-    return
-}
 module.exports = router;
