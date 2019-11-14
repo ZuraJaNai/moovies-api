@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const mooviesImport = require('./src/routes/mooviesImport');
 require('dotenv').config();
 
 const app = express();
@@ -27,5 +28,7 @@ mongoose
     .then(() => console.log('MongoDB successfully connected'))
     .catch(err => console.log(err));
 
+// Routes
+app.use('/import', mooviesImport);
 
 app.listen(port, () => console.log(`Server up and running on port ${port} !`));
