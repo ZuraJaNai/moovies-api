@@ -5,7 +5,6 @@ const readline = require('readline');
 const path = require('path');
 const multer = require('multer');
 const Moovie = require('../models/moovie');
-const Actor = require('../models/actor');
 const uploads = 'uploads';
 const fileName = 'file';
 
@@ -31,15 +30,41 @@ router.post('/', upload.single(fileName), (req, res) => {
         input: fs.createReadStream(pathToFile)
     });
 
+    let data = []
     lineReader.on('line', line => {
-        console.log('Line from file:', line);
+        if (!line.trim()) {
+            saveInstance(data);
+            data = [];
+        }
+        else {
+            data.push(line);
+        }
     });
     lineReader.on('close', () => fs.unlinkSync(pathToFile))
 
     res.status(200).end();
 });
 
-function importInstances(stream) {
-
+function saveInstance(data) {
+    let moovie = new Moovie({});
+    data.map(feature => {
+        let [key, value] = feature.split(":")
+        value = value.trim()
+        switch (key) {
+            case ("Title"): {
+                moovie.title = value;
+            }
+            case ("Release Year"): {
+                moovie.year = value;
+            }
+            case ("Format"): {
+                moovie.format = value;
+            }
+            case ("Stars"): {
+                moovie.actors = value.split(', ');
+            }
+        }
+    })
+    moovie.save();
 }
 module.exports = router;

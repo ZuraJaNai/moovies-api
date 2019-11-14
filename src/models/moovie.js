@@ -4,9 +4,7 @@ const moovieSchema = new mongoose.Schema({
     title: String,
     year: String,
     format: String,
-    actors: [
-        { type: mongoose.Schema.Types.ObjectId, ref: 'Actor' }
-    ]
+    actors: [String]
 });
 
 const Moovie = mongoose.model('Moovie', moovieSchema);
