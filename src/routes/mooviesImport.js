@@ -23,7 +23,6 @@ var upload = multer({ storage: storage })
 // @route POST /import
 // @desc import moovies from txt file to mongodb
 //       request body should contain txt file
-// @access Private
 router.post('/', upload.single(fileName), (req, res) => {
     const pathToFile = path.join(__dirname, `../../${uploads}/${fileName}`);
     const lineReader = readline.createInterface({
