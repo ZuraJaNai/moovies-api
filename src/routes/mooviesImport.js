@@ -47,7 +47,6 @@ router.post('/', upload.single(fileName), (req, res) => {
 
 function saveInstance(data) {
     Moovie.create({ ...data })
-        .then(result => console.log(result['Format']))
         .catch(err => console.log(err));
 }
 module.exports = router;
