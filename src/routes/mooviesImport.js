@@ -30,14 +30,15 @@ router.post('/', upload.single(fileName), (req, res) => {
         input: fs.createReadStream(pathToFile)
     });
 
-    let data = []
+    let data = new Object({})
     lineReader.on('line', line => {
         if (!line.trim()) {
             saveInstance(data);
-            data = [];
+            data = {};
         }
         else {
-            data.push(line);
+            const [key, value] = line.split(":")
+            data[key] = value.trim();
         }
     });
     lineReader.on('close', () => fs.unlinkSync(pathToFile))
@@ -46,25 +47,8 @@ router.post('/', upload.single(fileName), (req, res) => {
 });
 
 function saveInstance(data) {
-    let moovie = new Moovie({});
-    data.map(feature => {
-        let [key, value] = feature.split(":")
-        value = value.trim()
-        switch (key) {
-            case ("Title"): {
-                moovie.title = value;
-            }
-            case ("Release Year"): {
-                moovie.year = value;
-            }
-            case ("Format"): {
-                moovie.format = value;
-            }
-            case ("Stars"): {
-                moovie.actors = value.split(', ');
-            }
-        }
-    })
-    moovie.save();
+    Moovie.create({ ...data })
+        .then(result => console.log(result['Format']))
+        .catch(err => console.log(err));
 }
 module.exports = router;
