@@ -7,9 +7,9 @@ const Moovie = require('../models/moovie');
 // @desc Get list of moovies
 router.get('/', (req, res) => {
     Moovie.find({})
-        .then(results => {
-            req.body.response = results;
-            res.status(200).json(results);
+        .then(result => {
+            req.body.response = result;
+            res.status(200).json(result);
         })
         .catch(err => res.status(500).json(err));
 });
@@ -18,9 +18,9 @@ router.get('/', (req, res) => {
 // @desc Get list of moovies sorted alphabetically
 router.get('/sorted', (req, res) => {
     Moovie.find({}).sort({ title: 1 })
-        .then(results => {
-            req.body.response = results;
-            res.status(200).json(results);
+        .then(result => {
+            req.body.response = result;
+            res.status(200).json(result);
         })
         .catch(err => res.status(500).json(err));
 });
@@ -29,9 +29,9 @@ router.get('/sorted', (req, res) => {
 // @desc Get moovie by id
 router.get('/:id', (req, res) => {
     Moovie.findById(req.params.id)
-        .then(results => {
-            req.body.response = results;
-            res.status(200).json(results);
+        .then(result => {
+            req.body.response = result;
+            res.status(200).json(result);
         })
         .catch(err => res.status(500).json(err));
 });
@@ -40,13 +40,13 @@ router.get('/:id', (req, res) => {
 // @desc Create new moovie
 router.post('/', (req, res) => {
     Moovie.create({
-        title: req.body.title,
-        year: req.body.year,
-        format: req.body.format,
-        actors: req.body.actors,
+        "Title": req.body.title,
+        "Release Year": req.body.year,
+        "Format": req.body.format,
+        "Stars": req.body.stars,
     })
-        .then(results =>
-            res.status(201).json(results)
+        .then(result =>
+            res.status(201).json(result)
         )
         .catch(err => res.status(500).json(err));
 });
@@ -55,8 +55,8 @@ router.post('/', (req, res) => {
 // @desc Delete moovie by id
 router.delete('/:id', (req, res) => {
     Moovie.findByIdAndRemove(req.params.id)
-        .then(results => {
-            res.status(200).json(results);
+        .then(result => {
+            res.status(200).json(result);
         })
         .catch(err => res.status(500).json(err));
 });
