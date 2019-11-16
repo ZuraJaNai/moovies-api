@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 // @route GET /moovies/sorted
 // @desc Get list of moovies sorted alphabetically
 router.get('/sorted', (req, res) => {
-    Moovie.find({}).sort({ "Title": 1 })
+    Moovie.find({}).collation({ locale: "en" }).sort({ "Title": 1 })
         .then(result => {
             req.body.response = result;
             res.status(200).json(result);
