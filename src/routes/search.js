@@ -14,8 +14,8 @@ router.post('/title', (req, res) => {
 
 // @route POST /search/actor
 // @desc Find moovies by actor
-router.post('/actor', (req, res) => {
-    Moovie.find({ 'Stars': { "$regex": req.body.value, "$options": "i" } })
+router.post('/star', (req, res) => {
+    Moovie.find({ "Stars": { "$regex": req.body.value, "$options": "i" } })
         .then(results =>
             res.status(200).json(results)
         )
