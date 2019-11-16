@@ -4,8 +4,19 @@ const Moovie = require('../models/moovie');
 
 
 // @route GET /moovies
-// @desc Get list of moovies sorted alphabetically
+// @desc Get list of moovies
 router.get('/', (req, res) => {
+    Moovie.find({})
+        .then(results => {
+            req.body.response = results;
+            res.status(200).json(results);
+        })
+        .catch(err => res.status(500).json(err));
+});
+
+// @route GET /moovies/sorted
+// @desc Get list of moovies sorted alphabetically
+router.get('/sorted', (req, res) => {
     Moovie.find({}).sort({ title: 1 })
         .then(results => {
             req.body.response = results;
