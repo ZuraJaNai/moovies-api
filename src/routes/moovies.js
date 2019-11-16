@@ -40,10 +40,10 @@ router.get('/:id', (req, res) => {
 // @desc Create new moovie
 router.post('/', (req, res) => {
     Moovie.create({
-        "Title": req.body.title,
-        "Release Year": req.body.year,
-        "Format": req.body.format,
-        "Stars": req.body.stars,
+        "Title": req.body["Title"],
+        "Release Year": req.body["Release Year"],
+        "Format": req.body["Format"],
+        "Title": req.body["Title"],
     })
         .then(result =>
             res.status(201).json(result)
