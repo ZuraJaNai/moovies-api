@@ -48,7 +48,14 @@ router.post('/', (req, res) => {
         .then(result =>
             res.status(201).json(result)
         )
-        .catch(err => res.status(500).json(err));
+        .catch(err => {
+            if (err.code == "11000") {
+                res.status(409).json(err)
+            }
+            else {
+                res.status(500).json(err)
+            }
+        });
 });
 
 // @route delete /moovies/:id
