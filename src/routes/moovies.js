@@ -43,7 +43,7 @@ router.post('/', (req, res) => {
         "Title": req.body["Title"],
         "Release Year": req.body["Release Year"],
         "Format": req.body["Format"],
-        "Title": req.body["Title"],
+        "Stars": req.body["Stars"]
     })
         .then(result =>
             res.status(201).json(result)
