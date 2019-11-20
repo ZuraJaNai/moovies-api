@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 const mooviesImport = require('./src/routes/mooviesImport');
 const moovies = require('./src/routes/moovies');
 const search = require('./src/routes/search');
@@ -29,6 +30,12 @@ mongoose
     })
     .then(() => console.log('MongoDB successfully connected'))
     .catch(err => console.log(err));
+
+//create directory for file import
+const dir = `./${process.env.UPLOADS_DIR}`;
+if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+}
 
 // Routes
 app.use('/import', mooviesImport);

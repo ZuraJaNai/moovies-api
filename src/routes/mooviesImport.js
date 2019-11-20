@@ -5,13 +5,14 @@ const readline = require('readline');
 const path = require('path');
 const multer = require('multer');
 const Moovie = require('../models/moovie');
-const uploads = 'uploads';
+require('dotenv').config();
 const fileName = 'file';
+const dir = `../../${process.env.UPLOADS_DIR}/`;
 
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, path.join(__dirname, `../../${uploads}/`));
+        cb(null, path.join(__dirname, dir));
     },
     filename: function (req, file, cb) {
         cb(null, fileName)
@@ -24,7 +25,7 @@ var upload = multer({ storage: storage })
 // @desc import moovies from txt file to mongodb
 //       request body should contain txt file
 router.post('/', upload.single(fileName), (req, res) => {
-    const pathToFile = path.join(__dirname, `../../${uploads}/${fileName}`);
+    const pathToFile = path.join(__dirname, `${dir}/${fileName}`);
     const lineReader = readline.createInterface({
         input: fs.createReadStream(pathToFile)
     });
