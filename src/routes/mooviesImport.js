@@ -19,7 +19,16 @@ var storage = multer.diskStorage({
     }
 })
 
-var upload = multer({ storage: storage })
+var upload = multer({
+    storage: storage,
+    fileFilter: function (req, file, cb) {
+        const ext = path.extname(file.originalname);
+        if (ext !== '.txt') {
+            return cb(new Error('Only txt files are allowed'))
+        }
+        cb(null, true)
+    },
+})
 
 // @route POST /import
 // @desc import moovies from txt file to mongodb
